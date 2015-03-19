@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <meta name="viewport" content="width=1280,userscale=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script type="text/javascript">
+
+        // Wait for device API libraries to load
+        //
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        // device APIs are available
+      
+
+        // Audio player
+        //
+        var my_media = null;
+        var mediaTimer = null;
+		var reproduciendo = false;
+
+        // Play audio
+        //
+        function playAudio(src) {
+            if (my_media == null) {
+                // Create Media object from src
+                my_media = new Media(src, onSuccess, onError);
+            } // else play current audio
+            // Play audio
+			 if (reproduciendo) {
+                my_media.pause();
+				reproduciendo=false;
+            }
+			else {
+            my_media.play();
+			reproduciendo=true;}
+
+            // Update my_media position every second
+            if (mediaTimer == null) {
+                mediaTimer = setInterval(function() {
+                    // get my_media position
+                    my_media.getCurrentPosition(
+                        // success callback
+                        function(position) {
+                            if (position > -1) {
+                                setAudioPosition((position) + " sec");
+                            }
+                        },
+                        // error callback
+                        function(e) {
+                            console.log("Error getting pos=" + e);
+                            setAudioPosition("Error: " + e);
+                        }
+                    );
+                }, 1000);
+            }
+        }
+
+        // Pause audio
+        //
+        function pauseAudio() {
+            if (my_media) {
+                my_media.pause();
+            }
+        }
+
+        // Stop audio
+        //
+        function stopAudio() {
+            if (my_media) {
+                my_media.stop();
+            }
+            clearInterval(mediaTimer);
+            mediaTimer = null;
+        }
+
+        // onSuccess Callback
+        //
+        function onSuccess() {
+            console.log("playAudio():Audio Success");
+			alert("playAudio():Audio Success");
+        }
+
+        // onError Callback
+        //
+        function onError(error) {
+            alert('code: '    + error.code    + '\n' +
+                  'message: ' + error.message + '\n');
+        }
+
+        // Set audio position
+        //
+        function setAudioPosition(position) {
+            document.getElementById('audio_position').innerHTML = position;
+        }
+
+        </script>
+ 
+
+
+<style>
+boton {
+    position: fixed;
+    left: 45px;
+    top: 50px;
+}
+badel{
+    position: fixed;
+    left: 1130px;
+    top: 50px;
+}
+btras{
+    position: fixed;
+    top: 175px;
+    left: 1130px;
+}
+baudio{
+    position: fixed;
+    top: 300px;
+    left: 1125px;
+}
+badio2{
+	position:fixed;
+	top:425px;
+	left: 1125px;}
+pec{
+    position: fixed;
+    top: 50px;
+    left: 190px;
+}
+txt{position:fixed; top:310px; left:190px; font-family: Futura, 'Trebuchet MS', Arial, sans-serif; font-size: 30px; font-style: normal; font-variant: normal; color:#999999; line-height: 40px;width: 900px; height: 450px;overflow-y: scroll; background:#000000; border:#000000; text-align:justify;}
+
+titulo{position:fixed; top:50px; left:700px; font-family: Futura, 'Trebuchet MS', Arial, sans-serif; font-size: 30px; font-style: normal; font-variant: normal; color:#999999; line-height: 33px;width: 400px; height: 300px;; background:#000000; border:#000000; text-align:right;}
+
+
+body {
+	background-image: url(submenu/fondo.png);
+}
+</style>
+</head>
+
+<body>
+<div id="peque" style="display:inline;">
+<pec><a href="amp_08.html"><img src="imgpec/08.jpg" width="197" height="250" /></a></pec></div>
+<boton><a href="submenu.html"><img src="botones/bmg.png" width="100" height="100" /></a></boton>
+<badel><a href="09.html"><img src="botones/badel.png" width="100" height="100" /></a></badel>
+<btras><a href="07.html"><img src="botones/btras.png" width="100" height="100" /></a></btras>
+
+<div id="titulo" style="display:inline;">
+  <titulo>nº 8. "San Jerónimo penitente en el desierto"</p>
+Francisco Pacheco
+</p>
+</titulo></div>
+
+
+<txt>Francisco Pacheco, suegro de Velázquez, es el autor del cuadro de San Jerónimo penitente en el desierto, obra que responde perfectamente al manierismo reformado, adecuado para transmitir en imágenes el espíritu religioso de la Contrarreforma. El pintor sevillano se valió para la composición y la iconografía de este cuadro del grabado de "San Jerónimo oyendo la trompeta del Juicio Final", hecho por Jusepe Ribera en 1621 en Nápoles; y para el roquedo de otro grabado de Ribera, de ese mismo año, que representa a "San Pedro penitente". La pintura de Pacheco es estirada y el dibujo seco y marcado, con un claro influjo flamenco en el paisaje. San Jerónimo, apartado en el desierto, se dedica a la oración, al ayuno y a escribir la versión "Vulgata" de la Biblia.
+</txt>
+
+
+
+<baudio><a href="#" onclick="playAudio('/android_asset/www/media/08.mp3');"><img src="botones/baudio.png" width="100" height="100"  /></a></baudio>
+
+
+
+
+
+<
+
+</body>
+</html>

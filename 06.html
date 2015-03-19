@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <meta name="viewport" content="width=1280,userscale=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script type="text/javascript">
+
+        // Wait for device API libraries to load
+        //
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        // device APIs are available
+      
+
+        // Audio player
+        //
+        var my_media = null;
+        var mediaTimer = null;
+		var reproduciendo = false;
+
+        // Play audio
+        //
+        function playAudio(src) {
+            if (my_media == null) {
+                // Create Media object from src
+                my_media = new Media(src, onSuccess, onError);
+            } // else play current audio
+            // Play audio
+			 if (reproduciendo) {
+                my_media.pause();
+				reproduciendo=false;
+            }
+			else {
+            my_media.play();
+			reproduciendo=true;}
+
+            // Update my_media position every second
+            if (mediaTimer == null) {
+                mediaTimer = setInterval(function() {
+                    // get my_media position
+                    my_media.getCurrentPosition(
+                        // success callback
+                        function(position) {
+                            if (position > -1) {
+                                setAudioPosition((position) + " sec");
+                            }
+                        },
+                        // error callback
+                        function(e) {
+                            console.log("Error getting pos=" + e);
+                            setAudioPosition("Error: " + e);
+                        }
+                    );
+                }, 1000);
+            }
+        }
+
+        // Pause audio
+        //
+        function pauseAudio() {
+            if (my_media) {
+                my_media.pause();
+            }
+        }
+
+        // Stop audio
+        //
+        function stopAudio() {
+            if (my_media) {
+                my_media.stop();
+            }
+            clearInterval(mediaTimer);
+            mediaTimer = null;
+        }
+
+        // onSuccess Callback
+        //
+        function onSuccess() {
+            console.log("playAudio():Audio Success");
+			alert("playAudio():Audio Success");
+        }
+
+        // onError Callback
+        //
+        function onError(error) {
+            alert('code: '    + error.code    + '\n' +
+                  'message: ' + error.message + '\n');
+        }
+
+        // Set audio position
+        //
+        function setAudioPosition(position) {
+            document.getElementById('audio_position').innerHTML = position;
+        }
+
+        </script>
+ 
+
+
+<style>
+boton {
+    position: fixed;
+    left: 45px;
+    top: 50px;
+}
+badel{
+    position: fixed;
+    left: 1130px;
+    top: 50px;
+}
+btras{
+    position: fixed;
+    top: 175px;
+    left: 1130px;
+}
+baudio{
+    position: fixed;
+    top: 300px;
+    left: 1125px;
+}
+badio2{
+	position:fixed;
+	top:425px;
+	left: 1125px;}
+pec{
+    position: fixed;
+    top: 50px;
+    left: 190px;
+}
+txt{position:fixed; top:310px; left:190px; font-family: Futura, 'Trebuchet MS', Arial, sans-serif; font-size: 30px; font-style: normal; font-variant: normal; color:#999999; line-height: 40px;width: 900px; height: 450px;overflow-y: scroll; background:#000000; border:#000000; text-align:justify;}
+
+titulo{position:fixed; top:50px; left:700px; font-family: Futura, 'Trebuchet MS', Arial, sans-serif; font-size: 30px; font-style: normal; font-variant: normal; color:#999999; line-height: 33px;width: 400px; height: 300px;; background:#000000; border:#000000; text-align:right;}
+
+
+body {
+	background-image: url(submenu/fondo.png);
+}
+</style>
+</head>
+
+<body>
+<div id="peque" style="display:inline;">
+<pec><a href="amp_06.html"><img src="imgpec/06.jpg" width="202" height="250" /></a></pec></div>
+<boton><a href="submenu.html"><img src="botones/bmg.png" width="100" height="100" /></a></boton>
+<badel><a href="07.html"><img src="botones/badel.png" width="100" height="100" /></a></badel>
+<btras><a href="05.html"><img src="botones/btras.png" width="100" height="100" /></a></btras>
+
+<div id="titulo" style="display:inline;">
+  <titulo>nº 6. "Vera efigie del Venerable Luis Beltrán"</p>
+Juan Sariñena
+</p>
+</titulo></div>
+
+
+<txt>Juan Sariñena, pintor que reflejó en sus pinturas el espíritu religioso de la Contrarreforma católica, hizo esta Vera efigie del Venerable Luis Beltrán. Se sabe que un pintor, Juan Sariñena, el mismo día de la muerte del misionero dominico, ocurrida en el convento de Predicadores de Valencia, en octubre de 1581, lo pintó del natural, para que quedase recuerdo fidedigno de su aspecto. Se trata, pues, de la vera efigie de Luis Beltrán, que murió en olor de santidad, y que sería beatificado en 1608, y canonizado en 1671. Lleva los ojos cerrados, y sus brazos están en la misma posición en la que fueron colocados cuando fue expuesto en un lecho para la contemplación de su cadáver por los valencianos. Una inscripción en la parte superior identifica esa verdadera imagen del venerable, acompañada de los monogramas de Jesús y Maria.</txt>
+
+
+
+<baudio><a href="#" onclick="playAudio('/android_asset/www/media/06.mp3');"><img src="botones/baudio.png" width="100" height="100"  /></a></baudio>
+
+
+
+<
+
+</body>
+</html>
